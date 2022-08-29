@@ -14,7 +14,10 @@ def home():
         song=request.form.get('song')
         s=sp.search(song,limit=1)['tracks']['items'][0]
         sname=s['album']['name']
-        aname=s['album']['artists'][0]['name']+", "+s['album']['artists'][1]['name']
+        try:
+            aname=s['album']['artists'][0]['name']+", "+s['album']['artists'][1]['name']
+        except:
+            aname=s['album']['artists'][0]['name']
         img=s['album']['images'][1]['url']
         return render_template('index.html',sname=sname,aname=aname,img=img)
     return render_template('index.html')
