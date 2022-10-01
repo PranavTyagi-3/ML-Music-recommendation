@@ -57,6 +57,19 @@
                     </div>
                 </div>
             </div>
+            <h1 style="color: var(--bs-body-bg);text-align: center;margin: 25px;">You might like:</h1>
+            {% for r_sn,r_an,r_img,r_url in r %}
+                <div class="container" style="background: rgba(255, 255, 255, 0.349);border-radius: 25px;margin-top: 27px;">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 d-lg-flex justify-content-lg-end"><img width="100" height="80" style="width: 152px;height: 128px;margin-top: 10px;margin-bottom: 15px;" src="{{ r_img }}" /></div>
+                        <div class="col-md-6">
+                            <h1>{{ r_sn }}</h1>
+                            <p>By {{ r_an }}</p>
+                            <a href="{{ r_url }}" target="_blank">Listen Here</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
             {% endif %}
         </section>
     </main>
