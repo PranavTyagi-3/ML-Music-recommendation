@@ -1,5 +1,4 @@
 from flask import Flask,render_template,request
-"""
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
@@ -13,8 +12,8 @@ from sklearn.preprocessing import StandardScaler
 #Authentication
 client_credentials_manager = SpotifyClientCredentials(client_id='4b4cb4f8525543959104a2168e29e1c9', client_secret='8ea4d3b6032c4a35ba22999240e6859d')
 sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
-df = pd.read_csv(r"database.csv")
-df_songs_joined = pd.read_csv(r"km_alog.csv")
+df = pd.read_csv(r"Dataset\database.csv")
+df_songs_joined = pd.read_csv(r"Dataset\km_alog.csv")
 
 df["mood_vec"] = df[["valence", "energy"]].values.tolist()
 
@@ -40,9 +39,9 @@ def recommend(track_id, ref_df, sp, n_recs = 5):
     return ref_df_sorted.iloc[:n_recs]['id']
 
 def recommend1():
-    with open("model1.pkl", "rb") as f:
+    with open("Dataset\model1.pkl", "rb") as f:
         model = pickle.load(f)
-    with open("scalar_ss.pkl", "rb") as f:
+    with open("Dataset\scalar_ss.pkl", "rb") as f:
         ss = pickle.load(f)
     columns_to_cluster = ['acousticness', 'danceability', 'energy', 
                       'instrumentalness', 'liveness','valence', 'tempo','speechiness', 'loudness']
@@ -70,11 +69,18 @@ def home():
         print(recc)
         recc_sname,recc_aname,recc_img,recc_url=[],[],[],[]
         for i in recc:
-            tmp=sp.track(i)
-            recc_sname.append(tmp['name'])
-            recc_aname.append(tmp['album']['artists'][0]['name'])
-            recc_img.append(tmp['album']['images'][1]['url'])
-            recc_url.append(tmp['external_urls']['spotify'])
+            try:
+                tmp=sp.track(i)
+                tmp_sn=tmp['name']
+                tmp_an=tmp['album']['artists'][0]['name']
+                tmp_im=tmp['album']['images'][0]['url']
+                tmp_ur=tmp['external_urls']['spotify']    
+            except:
+                continue
+            recc_sname.append(tmp_sn)
+            recc_aname.append(tmp_an)
+            recc_img.append(tmp_im)
+            recc_url.append(tmp_ur)
 
         return render_template('index.html',sname=sname,aname=aname,img=img,r=zip(recc_sname,recc_aname,recc_img,recc_url))
     return render_template('index.html')
@@ -87,10 +93,6 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-"""
-@app.route('/')
-def home():
-    return 'Hello World'
 
 if __name__=="__main__":
     app.run()
