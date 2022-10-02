@@ -1,4 +1,5 @@
 from flask import Flask,render_template,request
+"""
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
@@ -86,6 +87,10 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+"""
+@app.route('/')
+def home():
+    return 'Hello World'
 
 if __name__=="__main__":
     app.run()
