@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
 #Authentication
-client_credentials_manager = SpotifyClientCredentials(client_id='4b4cb4f8525543959104a2168e29e1c9', client_secret='8ea4d3b6032c4a35ba22999240e6859d')
+client_credentials_manager = SpotifyClientCredentials(client_id='your_client_id', client_secret='your_secret_key')
 sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
 df = pd.read_csv(r"Dataset\database.csv")
 df_songs_joined = pd.read_csv(r"Dataset\km_alog.csv")
